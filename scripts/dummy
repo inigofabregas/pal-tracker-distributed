@@ -1,8 +1,23 @@
-./gradlew cloudNativeDeveloperDistributedSystemWithCircuitBreaker \
+./gradlew cloudNativeDeveloperDistributedSystemWithSecurity \
     -PregistrationServerUrl=https://registration-pal-inigofabregas.apps.pikes.pal.pivotal.io \
     -PbacklogServerUrl=https://backlog-pal-inigofabregas.apps.pikes.pal.pivotal.io \
     -PallocationsServerUrl=https://allocations-pal-inigofabregas.apps.pikes.pal.pivotal.io \
-    -PtimesheetsServerUrl=https://timesheets-pal-inigofabregas.apps.pikes.pal.pivotal.io
+    -PtimesheetsServerUrl=https://timesheets-pal-inigofabregas.apps.pikes.pal.pivotal.io \
+    -PactuatorUsername=actuator \
+    -PactuatorPassword=operations4red
 
 
-    curl localhost:8083 -H"Authorization: Bearer dfef8468-6e72-4d4d-9366-215137618212"
+    curl localhost:8083 -H"Authorization: Bearer ee11f1a6-5ede-489f-8c84-e51253995e05"
+
+
+    curl -k "https://p-identity.login.sys.pikes.pal.pivotal.io/oauth/token" -i -u "932050a9-5de8-4221-8a89-d1107c054b09:05346dae-dd64-4504-99aa-71167437899c" -X POST -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&response_type=token'
+         "auth_domain": "https://p-identity.login.sys.pikes.pal.pivotal.io",
+         "client_id": "932050a9-5de8-4221-8a89-d1107c054b09",
+         "client_secret": "05346dae-dd64-4504-99aa-71167437899c"
+
+
+curl https://allocations-pal-inigofabregas.apps.pikes.pal.pivotal.io/ -H"Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleS0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJkNjk3MzU4ZjgyMjc0MzQ4YmJhMGVhMGQ0ZWM4NjhkMyIsInN1YiI6IjkzMjA1MGE5LTVkZTgtNDIyMS04YTg5LWQxMTA3YzA1NGIwOSIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoiOTMyMDUwYTktNWRlOC00MjIxLThhODktZDExMDdjMDU0YjA5IiwiY2lkIjoiOTMyMDUwYTktNWRlOC00MjIxLThhODktZDExMDdjMDU0YjA5IiwiYXpwIjoiOTMyMDUwYTktNWRlOC00MjIxLThhODktZDExMDdjMDU0YjA5IiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiI0MmM0YjVmMCIsImlhdCI6MTU0MDgyNjEzMiwiZXhwIjoxNTQwODY5MzMyLCJpc3MiOiJodHRwczovL3AtaWRlbnRpdHkudWFhLnN5cy5waWtlcy5wYWwucGl2b3RhbC5pby9vYXV0aC90b2tlbiIsInppZCI6IjA3NWY0MDFlLWUwOTctNDZiZS04MjAyLTRmZDI3ZDVkZjE3NiIsImF1ZCI6WyJ1YWEiLCI5MzIwNTBhOS01ZGU4LTQyMjEtOGE4OS1kMTEwN2MwNTRiMDkiXX0.iKIwvZfj37gauHpe2-sJ0BAjHd5ZL40USOeDWcD-o8fHnQA2Q_zDmknR-jE2m2DPUXKzD8EAtZaM5pzAKfThGiVON6JjhkHaeMitX6RjVRxJl35sfzyPhCtXkT3j85L0wle1RwgYJf3i6YkP2Q6DJ6oaSC5KmOrv7jFXb_5Z_9EO00U04055uxycVrzpgd0cp0rpq3jlrsgFIzDq3aXdGy5JDteeE_LrlAS9EkQA-et-hFSIQsqiORtjvyH4NUwnTIO_4cv8HfdzClBs9I2KxirHgeXgTzZ2Wir8WvHdMxKvxg7Xq5KeSIT0No_mnYmKmExe4iguhajYve75JIP-gw"
+
+
+cf create-service p-config-server standard tracker-config-server \
+-c "{\"git\": {\"uri\": \"https://github.com/inigofabregas/tracker-config.git\", \"label\": \"master\"}}"
