@@ -1,4 +1,4 @@
-./gradlew cloudNativeDeveloperDistributedSystemDeployment \
+./gradlew cloudNativeDeveloperDistributedSystemWithServiceDiscovery \
     -PregistrationServerUrl=https://registration-pal-inigofabregas.apps.pikes.pal.pivotal.io \
     -PbacklogServerUrl=https://backlog-pal-inigofabregas.apps.pikes.pal.pivotal.io \
     -PallocationsServerUrl=https://allocations-pal-inigofabregas.apps.pikes.pal.pivotal.io \
